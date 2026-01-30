@@ -1,8 +1,8 @@
 class FlutterSkill < Formula
   desc "MCP Server for Flutter app automation - AI Agent control for Flutter apps"
   homepage "https://github.com/ai-dashboad/flutter-skill"
-  url "https://github.com/ai-dashboad/flutter-skill/archive/refs/tags/v0.2.5.tar.gz"
-  sha256 "001db029c35a8a0212a76b24a393ff6f945506aa2cec581c381caa2b5bcbe066"
+  url "https://github.com/ai-dashboad/flutter-skill/archive/refs/tags/v0.2.6.tar.gz"
+  sha256 "bf9fe1fb8f12a2c190672f0a22969bbaf5c6a0c7823f3403e9627f2dbf95f707"
   license "MIT"
 
   depends_on "dart-lang/dart/dart" => :recommended
