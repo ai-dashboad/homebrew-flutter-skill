@@ -1,65 +1,40 @@
 class FlutterSkill < Formula
   desc "MCP Server for Flutter app automation - AI Agent control for Flutter apps"
   homepage "https://github.com/ai-dashboad/flutter-skill"
-  url "https://github.com/ai-dashboad/flutter-skill/archive/refs/tags/v0.2.8.tar.gz"
-  sha256 "bae29ca7d6f0aac1196730ffb4a52118e0ece95c284c916518442a3219526033"
+  version "0.2.15"
   license "MIT"
 
-  depends_on "dart-lang/dart/dart" => :recommended
-
-  def install
-    # Install Dart source files
-    libexec.install Dir["*"]
-
-    # Create wrapper script that handles pub get on first run
-    (bin/"flutter-skill").write <<~EOS
-      #!/bin/bash
-      cd "#{libexec}"
-      # Run flutter pub get if .dart_tool doesn't exist or is incomplete
-      if [ ! -f ".dart_tool/package_config.json" ] || ! grep -q "flutter_skill" ".dart_tool/package_config.json" 2>/dev/null; then
-        if command -v flutter &> /dev/null; then
-          flutter pub get >/dev/null 2>&1
-        fi
-      fi
-      exec dart run bin/flutter_skill.dart "$@"
-    EOS
-
-    # Create MCP server wrapper
-    (bin/"flutter-skill-mcp").write <<~EOS
-      #!/bin/bash
-      cd "#{libexec}"
-      # Run flutter pub get if .dart_tool doesn't exist or is incomplete
-      if [ ! -f ".dart_tool/package_config.json" ] || ! grep -q "flutter_skill" ".dart_tool/package_config.json" 2>/dev/null; then
-        if command -v flutter &> /dev/null; then
-          flutter pub get >/dev/null 2>&1
-        fi
-      fi
-      exec dart run bin/server.dart "$@"
-    EOS
+  on_macos do
+    on_arm do
+      url "https://github.com/ai-dashboad/flutter-skill/releases/download/v0.2.15/flutter-skill-macos-arm64"
+      sha256 "1254548a3b0b14d9c4a0ddf205259a179b6f7e3d8afb9e68fc82697c5c5d85eb"
+    end
+    on_intel do
+      url "https://github.com/ai-dashboad/flutter-skill/releases/download/v0.2.15/flutter-skill-macos-x64"
+      sha256 "23cad15c1247fffe160a685c20ecb0e395610307036b3ab565f95d7a41480184"
+    end
   end
 
-  def post_install
-    # Try flutter pub get first (preferred for Flutter packages)
-    # Fall back to dart pub get if flutter is not available
-    if system("which flutter > /dev/null 2>&1")
-      system "flutter", "pub", "get", chdir: libexec
-    else
-      ohai "Flutter not found, skipping pub get. Run 'flutter pub get' in #{libexec} after installing Flutter."
-    end
+  on_linux do
+    url "https://github.com/ai-dashboad/flutter-skill/releases/download/v0.2.15/flutter-skill-linux-x64"
+    sha256 "fc5d90af7898d13cda2ff912b1b92493cdc66f6b1e95f9ab5d144dc39225bf4a"
+  end
+
+  def install
+    bin.install Dir["flutter-skill-*"].first => "flutter-skill"
   end
 
   def caveats
     <<~EOS
-      flutter-skill requires Flutter SDK for full functionality.
-      Install Flutter: https://docs.flutter.dev/get-started/install
+      flutter-skill is now installed as a native binary for instant startup!
 
-      After installing Flutter, run:
-        cd #{libexec} && flutter pub get
-
-      MCP Configuration:
+      MCP Configuration (add to ~/.claude/settings.json):
         {
-          "flutter-skill": {
-            "command": "flutter-skill-mcp"
+          "mcpServers": {
+            "flutter-skill": {
+              "command": "flutter-skill",
+              "args": ["server"]
+            }
           }
         }
 
@@ -71,6 +46,6 @@ class FlutterSkill < Formula
   end
 
   test do
-    assert_match "flutter-skill", shell_output("#{bin}/flutter-skill --help 2>&1", 1)
+    system "#{bin}/flutter-skill", "server", "--help"
   end
 end
