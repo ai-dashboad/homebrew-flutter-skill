@@ -1,23 +1,23 @@
 class FlutterSkill < Formula
   desc "MCP Server for Flutter app automation - AI Agent control for Flutter apps"
   homepage "https://github.com/ai-dashboad/flutter-skill"
-  version "0.4.7"
+  version "0.4.8"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/ai-dashboad/flutter-skill/releases/download/v0.4.7/flutter-skill-macos-arm64"
-      sha256 "fd15cf9169272c164fd50653069138eef78e9ff580ede52770b9e3777eb1f075"
+      url "https://github.com/ai-dashboad/flutter-skill/releases/download/v0.4.8/flutter-skill-macos-arm64"
+      sha256 "e808a90f1cf07a28dc0d6ca1312c795a7b2853ca03fd479de30fee976a1c794b"
     end
     on_intel do
-      url "https://github.com/ai-dashboad/flutter-skill/releases/download/v0.4.7/flutter-skill-macos-x64"
-      sha256 "6b912943709506a874eeda093d3cd9a73ae85f0546d5aabe2f980b29d3d9e64e"
+      url "https://github.com/ai-dashboad/flutter-skill/releases/download/v0.4.8/flutter-skill-macos-x64"
+      sha256 "a9b0650a9105444b90aac7373e2f5a405e0055a72c3458a7f878f94e389fe478"
     end
   end
 
   on_linux do
-    url "https://github.com/ai-dashboad/flutter-skill/releases/download/v0.4.7/flutter-skill-linux-x64"
-    sha256 "ad80f4e8eddcea684af28ef2aab53c1f5e79cff75dd6d18d8ff13ccf68f239f1"
+    url "https://github.com/ai-dashboad/flutter-skill/releases/download/v0.4.8/flutter-skill-linux-x64"
+    sha256 "e645d4d6d4652c1d9dac59fa6f672dd3bc5c0f9b860ef3bbc8dc6e23d185f16b"
   end
 
   def install
